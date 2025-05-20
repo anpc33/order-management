@@ -2,35 +2,30 @@
 
 @section('content')
 <div class="container">
-    <div class="card shadow-sm">
-        <div class="card-header bg-white py-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Quản lý khách hàng</h5>
-                <a href="{{ route('customers.create') }}" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Thêm khách hàng mới
-                </a>
-            </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ __('messages.customers') }}</h2>
+        <a href="{{ route('customers.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> {{ __('messages.add_customer') }}
+        </a>
+    </div>
+
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
         </div>
+    @endif
 
+    <div class="card">
         <div class="card-body">
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fas fa-check-circle me-2"></i>
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
             <div class="table-responsive">
                 <table class="table table-hover">
-                    <thead class="table-light">
+                    <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Tên khách hàng</th>
-                            <th>Số điện thoại</th>
-                            <th>Địa chỉ</th>
-                            <th>Ngày tạo</th>
-                            <th>Thao tác</th>
+                            <th>{{ __('messages.customer_id') }}</th>
+                            <th>{{ __('messages.name') }}</th>
+                            <th>{{ __('messages.phone') }}</th>
+                            <th>{{ __('messages.address') }}</th>
+                            <th>{{ __('messages.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,51 +37,21 @@
                                 <td>{{ $customer->name }}</td>
                                 <td>{{ $customer->phone }}</td>
                                 <td>{{ $customer->address }}</td>
-                                <td>{{ $customer->created_at->format('d/m/Y H:i') }}</td>
                                 <td>
-                                    <div class="btn-group">
-                                        <a href="{{ route('customers.show', $customer->id) }}"
-                                           class="btn btn-sm btn-info"
-                                           data-bs-toggle="tooltip"
-                                           title="Xem chi tiết">
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ route('customers.show', $customer) }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="{{ __('messages.view') }}">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('customers.edit', $customer->id) }}"
-                                           class="btn btn-sm btn-primary"
-                                           data-bs-toggle="tooltip"
-                                           title="Chỉnh sửa">
+                                        <a href="{{ route('customers.edit', $customer) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="{{ __('messages.edit') }}">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <button type="button"
-                                                class="btn btn-sm btn-danger"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#deleteModal{{ $customer->id }}"
-                                                title="Xóa">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-
-                                    <!-- Delete Modal -->
-                                    <div class="modal fade" id="deleteModal{{ $customer->id }}" tabindex="-1">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Xác nhận xóa</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>Bạn có chắc chắn muốn xóa khách hàng {{ $customer->name }}?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                    <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" class="d-inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">Xóa</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <form action="{{ route('customers.destroy', $customer) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="{{ __('messages.delete') }}" onclick="return confirm('{{ __('messages.confirm_delete') }}')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

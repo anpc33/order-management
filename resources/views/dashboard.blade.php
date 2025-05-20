@@ -6,7 +6,7 @@
         <div class="card bg-primary text-white">
             <div class="card-body">
                 <h5 class="card-title">
-                    <i class="fas fa-shopping-cart me-2"></i>Tổng đơn hàng
+                    <i class="fas fa-shopping-cart me-2"></i>{{ __('messages.total_orders') }}
                 </h5>
                 <h2 class="mb-0">{{ number_format($totalOrders) }}</h2>
             </div>
@@ -16,7 +16,7 @@
         <div class="card bg-success text-white">
             <div class="card-body">
                 <h5 class="card-title">
-                    <i class="fas fa-money-bill-wave me-2"></i>Doanh thu
+                    <i class="fas fa-money-bill-wave me-2"></i>{{ __('messages.total_revenue') }}
                 </h5>
                 <h2 class="mb-0">{{ number_format($totalRevenue) }}đ</h2>
             </div>
@@ -26,7 +26,7 @@
         <div class="card bg-info text-white">
             <div class="card-body">
                 <h5 class="card-title">
-                    <i class="fas fa-users me-2"></i>Khách hàng
+                    <i class="fas fa-users me-2"></i>{{ __('messages.total_customers') }}
                 </h5>
                 <h2 class="mb-0">{{ number_format($totalCustomers) }}</h2>
             </div>
@@ -36,7 +36,7 @@
         <div class="card bg-warning text-white">
             <div class="card-body">
                 <h5 class="card-title">
-                    <i class="fas fa-box me-2"></i>Sản phẩm
+                    <i class="fas fa-box me-2"></i>{{ __('messages.total_products') }}
                 </h5>
                 <h2 class="mb-0">{{ number_format($totalProducts) }}</h2>
             </div>
@@ -48,7 +48,7 @@
     <div class="col-md-8">
         <div class="card mb-4">
             <div class="card-header">
-                <h5 class="card-title mb-0">Doanh thu theo thời gian</h5>
+                <h5 class="card-title mb-0">{{ __('messages.revenue_by_time') }}</h5>
             </div>
             <div class="card-body">
                 <canvas id="revenueChart"></canvas>
@@ -58,7 +58,7 @@
     <div class="col-md-4">
         <div class="card mb-4">
             <div class="card-header">
-                <h5 class="card-title mb-0">Trạng thái đơn hàng</h5>
+                <h5 class="card-title mb-0">{{ __('messages.order_status') }}</h5>
             </div>
             <div class="card-body">
                 <canvas id="orderStatusChart"></canvas>
@@ -71,16 +71,16 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Sản phẩm bán chạy</h5>
+                <h5 class="card-title mb-0">{{ __('messages.top_products') }}</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Sản phẩm</th>
-                                <th>Số lượng đã bán</th>
-                                <th>Doanh thu</th>
+                                <th>{{ __('messages.product') }}</th>
+                                <th>{{ __('messages.quantity_sold') }}</th>
+                                <th>{{ __('messages.revenue') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -110,7 +110,7 @@ new Chart(revenueCtx, {
     data: {
         labels: {!! json_encode($dailyRevenue->pluck('date')) !!},
         datasets: [{
-            label: 'Doanh thu theo ngày',
+            label: '{{ __("messages.revenue_by_time") }}',
             data: {!! json_encode($dailyRevenue->pluck('revenue')) !!},
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1

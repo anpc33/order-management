@@ -5,12 +5,16 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAdmin;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route chuyển đổi ngôn ngữ
+Route::get('language/{lang}', [LanguageController::class, 'switchLang'])->name('language.switch');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
