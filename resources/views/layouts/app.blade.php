@@ -26,6 +26,16 @@
             .btn-icon {
                 padding: 0.25rem 0.5rem;
             }
+            .nav-link {
+                color: rgba(255, 255, 255, 0.9) !important;
+            }
+            .nav-link:hover {
+                color: #fff !important;
+            }
+            .nav-link.active {
+                color: #fff !important;
+                font-weight: 500;
+            }
         </style>
     </head>
     <body>
@@ -38,6 +48,34 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
+                    @auth
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+                                   href="{{ route('dashboard') }}">
+                                    <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}"
+                                   href="{{ route('products.index') }}">
+                                    <i class="fas fa-box me-1"></i> Sản phẩm
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('orders.*') ? 'active' : '' }}"
+                                   href="{{ route('orders.index') }}">
+                                    <i class="fas fa-shopping-cart me-1"></i> Đơn hàng
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('customers.*') ? 'active' : '' }}"
+                                   href="{{ route('customers.index') }}">
+                                    <i class="fas fa-users me-1"></i> Khách hàng
+                                </a>
+                            </li>
+                        </ul>
+                    @endauth
                     <ul class="navbar-nav ms-auto">
                         @guest
                             <li class="nav-item">
@@ -46,13 +84,21 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                    {{ Auth::user()->name }}
+                                    <i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                            <i class="fas fa-user-cog me-1"></i> Cài đặt
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
-                                            <button type="submit" class="dropdown-item">Đăng xuất</button>
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="fas fa-sign-out-alt me-1"></i> Đăng xuất
+                                            </button>
                                         </form>
                                     </li>
                                 </ul>

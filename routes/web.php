@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CustomerController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,14 +20,10 @@ Route::middleware(['auth', CheckAdmin::class])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
     Route::resource('products', ProductController::class);
-
+    Route::resource('customers', CustomerController::class);
     Route::resource('orders', OrderController::class);
     Route::patch('/orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
 });
-
-
-
 
 require __DIR__ . '/auth.php';
