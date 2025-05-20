@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade'); // liên kết với bảng customers
             $table->decimal('total_price', 10, 2)->default(0);
-            $table->enum('status', ['pending', 'shipping', 'completed'])->default('pending');
+            $table->enum('status', ['pending', 'processing', 'shipping', 'completed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

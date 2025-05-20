@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\OrderController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,6 +20,9 @@ Route::middleware(['auth', CheckAdmin::class])->group(function () {
 
 
     Route::resource('products', ProductController::class);
+
+    Route::resource('orders', OrderController::class);
+    Route::patch('/orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
 });
 
 
