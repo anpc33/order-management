@@ -13,7 +13,8 @@ export default defineConfig({
     ],
     build: {
         manifest: true,
-        outDir: 'public/build', // Laravel sẽ tìm manifest ở đây
+        outDir: 'public/build',
         emptyOutDir: true,
+        manifest: 'manifest.json',
     },
 });
