@@ -5,15 +5,8 @@ services:
     plan: free
     branch: main
     dockerfilePath: ./Dockerfile
-   buildCommand: ""
-
-    preDeployCommand: |
-      php artisan config:cache
-      php artisan view:cache
-      php artisan migrate --force
-
+    buildCommand: ""  # Vì đã build hết trong Dockerfile
     startCommand: apache2-foreground
-
     envVars:
       - key: APP_ENV
         value: production
