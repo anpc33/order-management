@@ -24,7 +24,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
 
 # Cài npm và build Vite — PHẢI chạy SAU khi copy source
-RUN npm install
+RUN npm install vite@5.2.10 --save-dev
+RUN rm -rf public/build
 RUN npm run build
 
 # Laravel clear cache (dù lỗi vẫn bỏ qua)
