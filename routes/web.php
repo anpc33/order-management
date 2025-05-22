@@ -9,6 +9,7 @@ use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAdmin;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,6 +18,18 @@ Route::get('/', function () {
 Route::get('/seed', function () {
     Artisan::call('db:seed', ['--force' => true]);
     return '✅ Seeder đã chạy thành công!';
+});
+
+Route::get('/check-db', function () {
+    $users = DB::table('users')->count();
+    $products = DB::table('products')->count();
+    $customers = DB::table('customers')->count();
+
+    return response()->json([
+        '✅ Users' => $users,
+        '✅ Products' => $products,
+        '✅ Customers' => $customers,
+    ]);
 });
 
 // Route chuyển đổi ngôn ngữ
