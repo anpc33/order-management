@@ -9,25 +9,27 @@ RUN apt-get update && apt-get install -y \
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
 
-# Bật mod_rewrite + chỉnh DocumentRoot về /public
+# Enable mod_rewrite + chỉnh DocumentRoot về public/
 RUN a2enmod rewrite
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
-# Copy source code
+# Copy source code vào container
 COPY . /var/www/html
 
-# Set working directory
+# Làm việc trong thư mục code Laravel
 WORKDIR /var/www/html
 
-# Cài composer
+# Cài Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install --no-dev --optimize-autoloader
 
 # Cài npm dependencies và build Vite
 RUN npm install && npm run build
 
-# Xóa cache Laravel cũ nếu có
-RUN php artisan config:clear && php artisan view:clear && php artisan cache:clear
+# Dọn cache Laravel (bỏ lỗi nếu không có DB)
+RUN php artisan config:clear || true
+RUN php artisan view:clear || true
+RUN php artisan cache:clear || true
 
-# Cấp quyền cho storage
+# Cấp quyền ghi cho Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
