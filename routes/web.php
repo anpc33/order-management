@@ -8,9 +8,15 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAdmin;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/seed', function () {
+    Artisan::call('db:seed', ['--force' => true]);
+    return '✅ Seeder đã chạy thành công!';
 });
 
 // Route chuyển đổi ngôn ngữ
