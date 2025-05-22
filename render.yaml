@@ -5,7 +5,11 @@ services:
     plan: free
     branch: main
     dockerfilePath: ./Dockerfile
-    buildCommand: ""
+    buildCommand: |
+  npm install
+  npm run build
+  php artisan config:clear
+
     preDeployCommand: |
       php artisan config:cache
       php artisan view:cache
