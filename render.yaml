@@ -5,7 +5,7 @@ services:
     plan: free
     branch: main
     dockerfilePath: ./Dockerfile
-    buildCommand: ""  # Vì đã build hết trong Dockerfile
+    buildCommand: ""  # vì build trong Dockerfile rồi
     startCommand: apache2-foreground
     envVars:
       - key: APP_ENV
